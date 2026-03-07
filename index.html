@@ -1,1 +1,206 @@
-Hello world!
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        
+        <title>Gnostic Games</title>
+        <link rel="icon" type="image/x-icon" href="resources/logo.png">
+    </head>
+
+    <body>
+        <header>
+            <!-- <img src="resources/logo.png" id="logo"> -->
+            <h1>Gnostic Games</h1>
+        </header>
+        
+        <hr>
+
+        <div class="game">
+            <h2>Runeline</h2>
+            <p><i>A magical factory game where you code your machines</i></p>
+
+            <img src="resources/header.png" alt="The game's capsule art">
+
+            <h3 class="wishlist"><a href="https://store.steampowered.com/app/4371150/Runeline/" target="_blank">Wishlist on steam</a></h3>
+
+            <p>
+                Design, build, and code a factory within the magical world of Runeline! 
+                Work on producing increasingly complex products, which will require you 
+                to write not just functional but optimized code, all within the simple 
+                instructions of the machine core.
+            </p>
+            <!--<h3>Features:</h3>
+            <ul>
+                <li></li>
+            </ul>-->
+
+            <h3>News:</h3>
+            <ul id="news">
+            </ul>
+        </div>
+
+        <br>
+
+        <!--<h2>Press kit</h2>
+
+        <br>
+
+        <h2>Our team</h2>
+
+        <footer>
+
+        </footer>-->
+    </body>
+
+    <style>
+        html {
+            background-color: #282828;
+        }
+
+        body {
+            padding: 20px;
+            background-color: #242424;
+            color: #ddd;
+            font-size: 16px;
+            font-family: monospace, 'Courier New', Courier;
+
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+
+            text-align: justify;
+
+            line-height: 1.5em;
+        }
+
+        #logo {
+            float: right;
+            width: 3em;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        a {
+            color: #f39c12;
+            text-decoration: dotted underline;
+            cursor: help;
+        }
+
+        .center-images img{
+            display:block;
+            margin: auto;
+        }
+
+        a:hover {
+            text-decoration: wavy underline;
+        }
+
+        .wishlist {
+            text-align: center;
+        }
+
+        .wishlist a{
+            color: rgb(236, 236, 236);
+            text-decoration: none;
+
+            background-color: #308a1e;
+            padding: 6px 10px 6px 10px;
+
+            border-radius: 3px;
+        }
+
+        @media screen and (orientation:portrait) {
+            body {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        news = document.getElementById("news");
+
+        createNewsEntry("View more...", "https://store.steampowered.com/news/app/4371150");
+
+        // we just need a bit of JS in order to get the latest news from steam
+
+        const rssURL = "https://corsproxy.io/?url=https://store.steampowered.com/feeds/news/app/4371150/?l=english";
+
+        async function fetchRSSFeed(url) 
+        {
+            try 
+            {
+                const response = await fetch(
+                    url,
+                    {
+                        headers: {
+                            'Access-Control-Allow-Origin':'*',
+                            "Origin": "gnosticgames.ca"
+                        }
+                    }
+                );
+
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                return await response.text();
+            } catch (error) 
+            {
+                console.error('Error fetching RSS feed:', error);
+            }
+        }
+
+        function parseRSS(rssText) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(rssText, 'text/xml');
+
+            return xmlDoc;
+        }
+
+        function extractFeedItems(xmlDoc) 
+        {
+            const items     = xmlDoc.getElementsByTagName('item');
+            const feedItems = [];
+
+            Array.from(items).forEach(item =>
+            {
+                const title   = item.getElementsByTagName('title')[0].textContent;
+                const link    = item.getElementsByTagName('link')[0].textContent;
+                const pubDate = new Date(item.getElementsByTagName('pubDate')[0]?.textContent);
+
+                feedItems.push({ title, link, pubDate });
+            });
+
+            return feedItems;
+        }
+
+        function createNewsEntry(title, link, time=null){
+            const listElement = document.createElement("li");
+            const linkElement = document.createElement("a");
+
+            linkElement.textContent = title;
+            linkElement.href        = link;
+
+            listElement.appendChild(linkElement);
+
+            if(time != null) listElement.innerHTML += "<span style='color:grey; float: right;'>" + time.toLocaleDateString() + "</span>";
+
+            news.appendChild(listElement);
+        }
+
+        fetchRSSFeed(rssURL).then((rssText) => {
+            const xmlDoc    = parseRSS(rssText);
+            const feedItems = extractFeedItems(xmlDoc);
+
+            news.textContent = "";
+
+            for(let i = 0; i < Math.min(3, feedItems.length); i++){
+                createNewsEntry(feedItems[i].title, feedItems[i].link, feedItems[i].pubDate);
+            }
+
+            createNewsEntry("View more...", "https://store.steampowered.com/news/app/4371150");
+        });
+    </script>
+</html>
