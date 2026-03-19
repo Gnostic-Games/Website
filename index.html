@@ -9,13 +9,142 @@
         <link rel="icon" type="image/x-icon" href="resources/logo.png">
 
         <script src="https://kit.fontawesome.com/8bde9d7472.js" crossorigin="anonymous"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+        <meta name="description" content="Gnostic Games: an indie studio making games where systems, logic, and creativity intersect.">
+        <meta property="og:title" content="Gnostic Games">
+        <meta property="og:description" content="Indie studio making games where systems, logic, and creativity intersect.">
+        <!--<meta property="og:image" content="https://gnosticgames.ca/resources/header.png">-->
+        <meta property="og:url" content="https://gnosticgames.ca">
+        <!--<meta name="twitter:card" content="summary_large_image">-->
+        <meta name="twitter:site" content="@gnosticgames">
+
+        <style>
+            html {
+                background-color: #282828;
+            }
+
+            body {
+                padding: 20px;
+                background-color: #222222;
+                color: #ddd;
+                font-size: 16px;
+                
+                font-family: "Inter", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: normal;
+                font-style: normal;
+
+                width: 40%;
+                margin-left: auto;
+                margin-right: auto;
+
+                text-align: justify;
+
+                line-height: 1.5em;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: monospace, 'Courier New', Courier;
+            }
+
+            #logo {
+                float: right;
+                width: 5em;
+            }
+
+            img {
+                width: 100%;
+            }
+
+            a {
+                color: #f39c12;
+                text-decoration: dotted underline;
+            }
+
+            #news li{
+                overflow: hidden;
+            }
+            
+            .center-images img{
+                display:block;
+                margin: auto;
+            }
+
+            a:hover {
+                text-decoration: wavy underline;
+            }
+
+            .wishlist {
+                text-align: center;
+            }
+
+            .wishlist a{
+                color: rgb(236, 236, 236);
+                text-decoration: none;
+
+                background-color: #308a1e;
+                padding: 6px 10px 6px 10px;
+
+                border-radius: 3px;
+            }
+
+            .wishlist a:hover{
+                filter: brightness(1.1)
+            }
+
+            @media screen and (orientation:portrait) {
+                body {
+                    width: 90%;
+                    padding: 5%;
+                }
+            }
+
+            footer {
+                text-align: center;
+            }
+
+            footer .icon {
+                margin: 10px;
+                font-size: 30px;
+                display: inline-block;
+                color: rgb(236, 236, 236);
+                text-decoration: none;
+                text-align: center;
+            }
+        </style>
+
+        <script>
+            // RSS: https://store.steampowered.com/feeds/news/app/4371150/?l=english
+
+            function createNewsEntry(title, link, time=null){
+                const news = document.getElementById("news");
+
+                const listElement = document.createElement("li");
+                const linkElement = document.createElement("a");
+
+                linkElement.textContent = title;
+                linkElement.href        = link;
+
+                listElement.appendChild(linkElement);
+
+                if(time != null) listElement.innerHTML += "<span style='color:grey; float: right;'>" + time.toLocaleDateString() + "</span>";
+
+                news.appendChild(listElement);
+            }
+        </script>
     </head>
 
     <body>
         <header>
-            <!-- <img src="resources/logo.png" id="logo"> -->
-            <h1>Gnostic Games</h1>
-            <i>Making games where systems, logic, and creativity intersect.</i>
+            <img src="resources/logo.png" id="logo">
+            <span>
+                <h1>Gnostic Games</h1>
+                <i>Making games where systems, logic, and creativity intersect.</i>
+            </span>
         </header>
         <br>
         <hr>
@@ -73,93 +202,7 @@
         </footer>
     </body>
 
-    <style>
-        html {
-            background-color: #282828;
-        }
-
-        body {
-            padding: 20px;
-            background-color: #222222;
-            color: #ddd;
-            font-size: 16px;
-            font-family: monospace, 'Courier New', Courier;
-
-            width: 40%;
-            margin-left: auto;
-            margin-right: auto;
-
-            text-align: justify;
-
-            line-height: 1.5em;
-        }
-
-        #logo {
-            float: right;
-            width: 3em;
-        }
-
-        img {
-            width: 100%;
-        }
-
-        a {
-            color: #f39c12;
-            text-decoration: dotted underline;
-            cursor: help;
-        }
-
-        #news li{
-            overflow: hidden;
-        }
-        
-        .center-images img{
-            display:block;
-            margin: auto;
-        }
-
-        a:hover {
-            text-decoration: wavy underline;
-        }
-
-        .wishlist {
-            text-align: center;
-        }
-
-        .wishlist a{
-            color: rgb(236, 236, 236);
-            text-decoration: none;
-
-            background-color: #308a1e;
-            padding: 6px 10px 6px 10px;
-
-            border-radius: 3px;
-        }
-
-        @media screen and (orientation:portrait) {
-            body {
-                width: 90%;
-                padding: 5%;
-            }
-        }
-
-        footer {
-            text-align: center;
-        }
-
-        footer .icon {
-            margin: 10px;
-            font-size: 30px;
-            display: inline-block;
-            color: rgb(236, 236, 236);
-            text-decoration: none;
-            text-align: center;
-        }
-    </style>
-
     <script>
-        news = document.getElementById("news");
-
         // hardcode news entries
 
         createNewsEntry(
@@ -178,86 +221,5 @@
             new Date("Fri, 27 Feb 2026 16:15:50 +0000")
         );
         createNewsEntry("View more...", "https://store.steampowered.com/news/app/4371150");
-
-        // we just need a bit of JS in order to get the latest news from steam
-
-        const rssURL = "https://corsproxy.io/?url=https://store.steampowered.com/feeds/news/app/4371150/?l=english";
-
-        async function fetchRSSFeed(url) 
-        {
-            try 
-            {
-                const response = await fetch(
-                    url,
-                    {
-                        headers: {
-                            'Access-Control-Allow-Origin':'*',
-                            "Origin": "gnosticgames.ca"
-                        }
-                    }
-                );
-
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
-                return await response.text();
-            } catch (error) 
-            {
-                console.error('Error fetching RSS feed:', error);
-            }
-        }
-
-        function parseRSS(rssText) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(rssText, 'text/xml');
-
-            return xmlDoc;
-        }
-
-        function extractFeedItems(xmlDoc) 
-        {
-            const items     = xmlDoc.getElementsByTagName('item');
-            const feedItems = [];
-
-            Array.from(items).forEach(item =>
-            {
-                const title   = item.getElementsByTagName('title')[0].textContent;
-                const link    = item.getElementsByTagName('link')[0].textContent;
-                const pubDate = new Date(item.getElementsByTagName('pubDate')[0]?.textContent);
-
-                feedItems.push({ title, link, pubDate });
-            });
-
-            return feedItems;
-        }
-
-        function createNewsEntry(title, link, time=null){
-            const listElement = document.createElement("li");
-            const linkElement = document.createElement("a");
-
-            linkElement.textContent = title;
-            linkElement.href        = link;
-
-            listElement.appendChild(linkElement);
-
-            if(time != null) listElement.innerHTML += "<span style='color:grey; float: right;'>" + time.toLocaleDateString() + "</span>";
-
-            news.appendChild(listElement);
-        }
-
-        // hotlinking a bit scummy anyways
-        /*fetchRSSFeed(rssURL).then((rssText) => {
-            const xmlDoc    = parseRSS(rssText);
-            const feedItems = extractFeedItems(xmlDoc);
-
-            news.textContent = "";
-
-            for(let i = 0; i < Math.min(3, feedItems.length); i++){
-                createNewsEntry(feedItems[i].title, feedItems[i].link, feedItems[i].pubDate);
-            }
-
-            createNewsEntry("View more...", "https://store.steampowered.com/news/app/4371150");
-        });*/
-
-
     </script>
 </html>
